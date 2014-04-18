@@ -158,12 +158,8 @@ public class DemoActorMain {
         final ActorRef listener = system.actorOf(Props.create(Listener.class), "listener");
 
         // create the master
-        ActorRef master = system.actorOf(Props.create(new Creator<Master>() {
-            @Override
-            public Master create() throws Exception {
-                return new Master(nrOfWorkers, nrOfMessages, nrOfElements, listener);
-            }
-        }), "master");
+        ActorRef master = system.actorOf(Props.create(Master.class, nrOfWorkers,
+                nrOfMessages, nrOfElements, listener), "master");
 
         // start the calculation
         master.tell(new Calculate(), null);
